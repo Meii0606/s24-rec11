@@ -41,8 +41,7 @@ public class TicTacToePlugin implements GamePlugin<Integer>{
 
     @Override
     public void onNewMove() {
-        String currentPlayer = game.currentPlayer() == TicTacToe.Player.X ? "1" : "2";
-        framework.setFooterText("Player " + currentPlayer + "'s turn");
+        framework.setFooterText("");
     }
 
     @Override
@@ -53,6 +52,7 @@ public class TicTacToePlugin implements GamePlugin<Integer>{
     @Override
     public void onMovePlayed(int x, int y) {
         game.play(x, y);
+        framework.setSquare(x, y, game.currentPlayer().toString());
     }
 
     @Override
@@ -67,15 +67,8 @@ public class TicTacToePlugin implements GamePlugin<Integer>{
 
     @Override
     public String getGameOverMessage() {
-        return "Player " + game.winner() + " wins!";
-    }
-
-    public Integer getSquare(int x, int y) {
-        TicTacToe.Player player = game.getSquare(x, y);
-        if (player == null) {
-            return null;
-        }
-        return player == TicTacToe.Player.X ? 0 : 1;
+        String winner = game.winner() == TicTacToe.Player.X ? "Player 1" : "Player 2";
+        return String.format("Game over! Winner: %s", winner);
     }
 
     @Override
